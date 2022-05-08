@@ -1,5 +1,5 @@
 import React from "react";
-// import coverImage from "../../assets/cover/cover-image.jpg";
+import { capitalizeFirstLetter } from "../../utils/helpers";
 
 function Nav() {
     const categories = [
@@ -9,36 +9,43 @@ function Nav() {
         { name: "Landscape", description: "Fields, farmhouse, waterfalls, and the beauty of nature" },
     ];
 
-    function categorySelected(name) {
-        console.log(`${name} clicked`)
-    }
+    const handleClick = (item) => {
+        console.log(item);
+        return item;
+    };
 
-    return (
-        <header className="my-5">
-            <h2>
-                <a href="/">
-                    <span role="img" aria-label="camera"> 📸</span> Oh Snap!
-                </a>
-            </h2>
-            <nav>
-                <ul className="flex-row">
-                    <li className="mx-2">
-                        <a href="#about">
-                            About Me
-                        </a>
-                    </li>
-                    <li>
-                        <span>Contact</span>
-                    </li>
-                    {categories.map((category) => (
-                        <li className="mx-1" key={category.name}>
-                            <span onClick={() => categorySelected(category.name)}>{category.name}</span>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
-        </header>
-    );
+  return (
+    <header className="flex-row px-1">
+      <h2>
+        <a data-testid="link" href="/">
+          <span role="img" aria-label="camera"> 📸</span> Oh Snap!
+        </a>
+      </h2>
+      <nav>
+        <ul className="flex-row">
+          <li className="mx-2">
+            <a data-testid="about" href="#about" onClick={() => handleClick("About")}>
+              About me
+            </a>
+          </li>
+          <li className={"mx-2"}>
+            <span onClick={() => handleClick('Contact')}>
+              Contact
+            </span>
+          </li>
+          {
+            categories.map((category) => (
+              <li className="mx-1" key={category.name} >
+                <span onClick={() => { handleClick(category.name); }}>
+                 {capitalizeFirstLetter(category.name)}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </header>
+  );
 }
 
 export default Nav;
